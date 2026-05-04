@@ -42,6 +42,49 @@ Stata:
 ***************************************************************************************
 ```
 
+## Making data available - some ways forward
+
+### Script to download data (from API/web)
+
+This is a top option if possible, and can be achieved through lots of data providers. World Bank for example makes GDP per capita available for direct download (so you don't need to tell the reader what to do):
+
+``` r
+data_fetch <- jsonlite::read_json(
+  glue::glue(
+    "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.CD?date=1990:2023&format=json&per_page=9000"
+  ),
+  simplifyVector = TRUE
+)
+
+tibble::as_tibble(data_fetch[[2]]) 
+#> # A tibble: 9,000 × 8
+#>    indicator$id  country$id countryiso3code date  value unit  obs_status decimal
+#>    <chr>         <chr>      <chr>           <chr> <dbl> <chr> <chr>        <int>
+#>  1 NY.GDP.PCAP.… ZH         AFE             2023  1571. ""    ""               1
+#>  2 NY.GDP.PCAP.… ZH         AFE             2022  1679. ""    ""               1
+#>  3 NY.GDP.PCAP.… ZH         AFE             2021  1562. ""    ""               1
+#>  4 NY.GDP.PCAP.… ZH         AFE             2020  1352. ""    ""               1
+#>  5 NY.GDP.PCAP.… ZH         AFE             2019  1507. ""    ""               1
+#>  6 NY.GDP.PCAP.… ZH         AFE             2018  1552. ""    ""               1
+#>  7 NY.GDP.PCAP.… ZH         AFE             2017  1528. ""    ""               1
+#>  8 NY.GDP.PCAP.… ZH         AFE             2016  1334. ""    ""               1
+#>  9 NY.GDP.PCAP.… ZH         AFE             2015  1499. ""    ""               1
+#> 10 NY.GDP.PCAP.… ZH         AFE             2014  1690. ""    ""               1
+#> # ℹ 8,990 more rows
+#> # ℹ 2 more variables: indicator$value <chr>, country$value <chr>
+```
+
+Other API providers include [Stat-Xplore](https://stat-xplore.dwp.gov.uk/webapi/online-help/Open-Data-API.html) for open government data and [ONS Statistics](https://www.api.gov.uk/ons/#office-for-national-statistics).
+
+### Link archived data
+
+If you're using secondary data that you downloaded from an online source **you are probably not allowed to re-share it**. Instead, give your reader the links and instructions to set it up in the project folder. e.g.:
+
+* Download the data from xxx (use full citation if given)
+* Place files xxx.csv and yyy.csv in the `data/` subfolder of this project
+
+Then your scripts should access it as normal from there!
+
 ## Writing a `README.md` - markdown formatting
 
 Markdown formatting is easy and intuitive. If you write a README.md file you can use these tools to format it. You can see more at the [GitHub formatting guide page](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) (from which these examples are taken).
