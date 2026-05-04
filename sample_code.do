@@ -1,4 +1,4 @@
-import delimited sample_data.csv, clear
+import delimited "C:\reproducible_research_project\Code_for_reproducible_research_files\sample_data.csv", clear
 
 
 lab define region_names ///

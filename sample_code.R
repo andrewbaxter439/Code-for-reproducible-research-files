@@ -1,6 +1,6 @@
 library(tidyverse)
 
-df <- read_csv("sample_data.csv")
+df <- read_csv("C:/reproducible_research_project/Code_for_reproducible_research_files/sample_data.csv")
 
 region_codes <- tribble(
   ~code, ~region_name,
